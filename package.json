@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "backend": "nodemon backend/index.js",
-    "build": "react-scripts build",
+    "build": "npm i",
     "frontend": "npm run dev --prefix frontend",
     "dev": "concurrently \"npm run frontend\" \"npm run backend",
     "predeploy": "npm run build",
