@@ -1,3 +1,4 @@
+// Home.js
 import { Link, useParams } from "react-router-dom";
 import { useGetProductsQuery } from "../redux/api/productApiSlice";
 import Loader from "../components/Loader";
@@ -23,12 +24,12 @@ const Home = () => {
     }
 
     return (
-      <div className="flex justify-center flex-wrap mt-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
         {data.products.length === 0 ? (
           <Message variant="info">No products found.</Message>
         ) : (
           data.products.map((product) => (
-            <div key={product._id} className="m-2">
+            <div key={product._id} className="flex justify-center">
               <Product product={product} />
             </div>
           ))
@@ -41,6 +42,11 @@ const Home = () => {
     <>
       {!keyword && <Header />}
       <div className="container mx-auto">
+        {/* Welcome message with some spacing */}
+        <div className="text-center mt-10 mb-5">
+          <h1 className="text-4xl font-bold">Welcome to E-Commerce</h1>
+        </div>
+
         <div className="flex justify-between items-center mt-10">
           <h1 className="text-3xl font-bold">Special Products</h1>
           <Link

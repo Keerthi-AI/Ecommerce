@@ -10,15 +10,18 @@ import { clearCartItems } from "../../redux/features/cart/cartSlice";
 
 const PlaceOrder = () => {
   const navigate = useNavigate();
+
   const cart = useSelector((state) => state.cart);
+
   const [createOrder, { isLoading, error }] = useCreateOrderMutation();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!cart.shippingAddress.address) {
       navigate("/shipping");
     }
-  }, [cart.shippingAddress.address, navigate]);
+  }, [cart.paymentMethod, cart.shippingAddress.address, navigate]);
+
+  const dispatch = useDispatch();
 
   const placeOrderHandler = async () => {
     try {
@@ -34,7 +37,7 @@ const PlaceOrder = () => {
       dispatch(clearCartItems());
       navigate(`/order/${res._id}`);
     } catch (error) {
-      toast.error(error?.data?.message || "Failed to place order");
+      toast.error(error);
     }
   };
 
@@ -50,11 +53,11 @@ const PlaceOrder = () => {
             <table className="w-full border-collapse">
               <thead>
                 <tr>
-                  <th className="px-1 py-2 text-left align-top">Image</th>
-                  <th className="px-1 py-2 text-left">Product</th>
-                  <th className="px-1 py-2 text-left">Quantity</th>
-                  <th className="px-1 py-2 text-left">Price</th>
-                  <th className="px-1 py-2 text-left">Total</th>
+                  <td className="px-1 py-2 text-left align-top">Image</td>
+                  <td className="px-1 py-2 text-left">Product</td>
+                  <td className="px-1 py-2 text-left">Quantity</td>
+                  <td className="px-1 py-2 text-left">Price</td>
+                  <td className="px-1 py-2 text-left">Total</td>
                 </tr>
               </thead>
 
@@ -70,13 +73,13 @@ const PlaceOrder = () => {
                     </td>
 
                     <td className="p-2">
-                      <Link to={`/product/${item.product}`} className="text-blue-500 hover:underline">
-                        {item.name}
-                      </Link>
+                      <Link to={`/product/${item.product}`}>{item.name}</Link>
                     </td>
                     <td className="p-2">{item.qty}</td>
                     <td className="p-2">{item.price.toFixed(2)}</td>
-                    <td className="p-2">₹ {(item.qty * item.price).toFixed(2)}</td>
+                    <td className="p-2">
+                      ₹ {(item.qty * item.price).toFixed(2)}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -86,27 +89,29 @@ const PlaceOrder = () => {
 
         <div className="mt-8">
           <h2 className="text-2xl font-semibold mb-5">Order Summary</h2>
-          <div className="flex justify-between flex-wrap p-8 bg-[#181818] rounded-lg shadow-lg">
+          <div className="flex justify-between flex-wrap p-8 bg-[#181818]">
             <ul className="text-lg">
               <li>
-                <span className="font-semibold">Items:</span> ₹ {cart.itemsPrice}
+                <span className="font-semibold mb-4">Items:</span> ₹
+                {cart.itemsPrice}
               </li>
               <li>
-                <span className="font-semibold">Shipping:</span> ₹ {cart.shippingPrice}
+                <span className="font-semibold mb-4">Shipping:</span> ₹
+                {cart.shippingPrice}
               </li>
               <li>
-                <span className="font-semibold">Tax:</span> ₹ {cart.taxPrice}
+                <span className="font-semibold mb-4">Tax:</span> ₹
+                {cart.taxPrice}
               </li>
               <li>
-                <span className="font-semibold">Total:</span> ₹ {cart.totalPrice}
+                <span className="font-semibold mb-4">Total:</span> ₹
+                {cart.totalPrice}
               </li>
             </ul>
 
-            {error && (
-              <Message variant="danger">{error.data.message}</Message>
-            )}
+            {error && <Message variant="danger">{error.data.message}</Message>}
 
-            <div className="mt-4">
+            <div>
               <h2 className="text-2xl font-semibold mb-4">Shipping</h2>
               <p>
                 <strong>Address:</strong> {cart.shippingAddress.address},{" "}
@@ -115,7 +120,7 @@ const PlaceOrder = () => {
               </p>
             </div>
 
-            <div className="mt-4">
+            <div>
               <h2 className="text-2xl font-semibold mb-4">Payment Method</h2>
               <strong>Method:</strong> {cart.paymentMethod}
             </div>
@@ -123,13 +128,11 @@ const PlaceOrder = () => {
 
           <button
             type="button"
-            className={`bg-pink-500 text-white py-2 px-4 rounded-full text-lg w-full mt-4 ${
-              isLoading ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-            disabled={isLoading || cart.cartItems.length === 0}
+            className="bg-pink-500 text-white py-2 px-4 rounded-full text-lg w-full mt-4"
+            disabled={cart.cartItems === 0}
             onClick={placeOrderHandler}
           >
-            {isLoading ? "Placing Order..." : "Place Order"}
+            Place Order
           </button>
 
           {isLoading && <Loader />}

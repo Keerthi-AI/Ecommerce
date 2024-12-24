@@ -11,39 +11,29 @@ const AdminMenu = () => {
 
   return (
     <>
-      {/* Menu Toggle Button */}
       <button
-        className={`fixed z-50 bg-[#151515] p-3 rounded-lg shadow-lg transition-all duration-500 ease-in-out ${
-          isMenuOpen ? "top-2 right-2" : "top-5 right-5"
-        }`}
+        className={`${
+          isMenuOpen ? "top-2 right-2" : "top-5 right-7"
+        } bg-[#151515] p-2 fixed rounded-lg`}
         onClick={toggleMenu}
       >
         {isMenuOpen ? (
-          <FaTimes color="white" size={24} />
+          <FaTimes color="white" />
         ) : (
           <>
-            <div className="w-6 h-0.5 bg-gray-200 my-1 transition-all duration-300"></div>
-            <div className="w-6 h-0.5 bg-gray-200 my-1 transition-all duration-300"></div>
-            <div className="w-6 h-0.5 bg-gray-200 my-1 transition-all duration-300"></div>
+            <div className="w-6 h-0.5 bg-gray-200 my-1"></div>
+            <div className="w-6 h-0.5 bg-gray-200 my-1"></div>
+            <div className="w-6 h-0.5 bg-gray-200 my-1"></div>
           </>
         )}
       </button>
 
-      {/* Backdrop */}
       {isMenuOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300"
-          onClick={toggleMenu}
-        ></div>
-      )}
-
-      {/* Admin Menu */}
-      {isMenuOpen && (
-        <section className="bg-[#151515] text-white p-6 fixed right-5 top-5 z-50 rounded-lg shadow-2xl w-64 transition-transform duration-500 ease-in-out transform">
-          <ul className="list-none mt-2 space-y-4">
+        <section className="bg-[#151515] p-4 fixed right-7 top-5">
+          <ul className="list-none mt-2">
             <li>
               <NavLink
-                className="block py-2 px-3 mb-2 hover:bg-[#2E2D2D] rounded-md transition-colors duration-300"
+                className="list-item py-2 px-3 block mb-5 hover:bg-[#2E2D2D] rounded-sm"
                 to="/admin/dashboard"
                 style={({ isActive }) => ({
                   color: isActive ? "greenyellow" : "white",
@@ -54,7 +44,7 @@ const AdminMenu = () => {
             </li>
             <li>
               <NavLink
-                className="block py-2 px-3 mb-2 hover:bg-[#2E2D2D] rounded-md transition-colors duration-300"
+                className="list-item py-2 px-3 block mb-5 hover:bg-[#2E2D2D] rounded-sm"
                 to="/admin/categorylist"
                 style={({ isActive }) => ({
                   color: isActive ? "greenyellow" : "white",
@@ -65,7 +55,7 @@ const AdminMenu = () => {
             </li>
             <li>
               <NavLink
-                className="block py-2 px-3 mb-2 hover:bg-[#2E2D2D] rounded-md transition-colors duration-300"
+                className="list-item py-2 px-3 block mb-5 hover:bg-[#2E2D2D] rounded-sm"
                 to="/admin/productlist"
                 style={({ isActive }) => ({
                   color: isActive ? "greenyellow" : "white",
@@ -76,7 +66,7 @@ const AdminMenu = () => {
             </li>
             <li>
               <NavLink
-                className="block py-2 px-3 mb-2 hover:bg-[#2E2D2D] rounded-md transition-colors duration-300"
+                className="list-item py-2 px-3 block mb-5 hover:bg-[#2E2D2D] rounded-sm"
                 to="/admin/allproductslist"
                 style={({ isActive }) => ({
                   color: isActive ? "greenyellow" : "white",
@@ -87,7 +77,7 @@ const AdminMenu = () => {
             </li>
             <li>
               <NavLink
-                className="block py-2 px-3 mb-2 hover:bg-[#2E2D2D] rounded-md transition-colors duration-300"
+                className="list-item py-2 px-3 block mb-5 hover:bg-[#2E2D2D] rounded-sm"
                 to="/admin/userlist"
                 style={({ isActive }) => ({
                   color: isActive ? "greenyellow" : "white",
@@ -98,7 +88,7 @@ const AdminMenu = () => {
             </li>
             <li>
               <NavLink
-                className="block py-2 px-3 mb-2 hover:bg-[#2E2D2D] rounded-md transition-colors duration-300"
+                className="list-item py-2 px-3 block mb-5 hover:bg-[#2E2D2D] rounded-sm"
                 to="/admin/orderlist"
                 style={({ isActive }) => ({
                   color: isActive ? "greenyellow" : "white",
